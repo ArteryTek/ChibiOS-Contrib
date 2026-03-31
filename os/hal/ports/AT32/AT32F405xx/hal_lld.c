@@ -57,11 +57,12 @@ static void hal_lld_backup_domain_init(void) {
   /* Backup domain access enabled and left open.*/
   PWC->CTRL |= PWC_CTRL_BPWEN;
   
-  /* Reset BKP domain if different clock source selected.*/
   if ((CRM->BPDC & AT32_ERTCSEL_MASK) != AT32_ERTCSEL) {
     /* Backup domain reset.*/
     CRM->BPDC = CRM_BPDC_BPDRST;
+    __NOP();__NOP();__NOP();__NOP();__NOP();__NOP();
     CRM->BPDC = 0;
+    __NOP();__NOP();__NOP();__NOP();__NOP();__NOP();
   }
 
   /* If enabled then the LEXT is started.*/
@@ -81,9 +82,11 @@ static void hal_lld_backup_domain_init(void) {
      initialization.*/
   if ((CRM->BPDC & CRM_BPDC_ERTCEN) == 0) {
     /* Selects clock source.*/
+    __NOP();__NOP();__NOP();__NOP();__NOP();__NOP();
     CRM->BPDC |= AT32_ERTCSEL;
 
     /* ERTC clock enabled.*/
+    __NOP();__NOP();__NOP();__NOP();__NOP();__NOP();
     CRM->BPDC |= CRM_BPDC_ERTCEN;
   }
 #endif /* AT32_ERTCSEL != AT32_ERTCSEL_NOCLOCK */
