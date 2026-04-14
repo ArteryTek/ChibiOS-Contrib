@@ -39,6 +39,12 @@
  * @note    It is declared in system_at32f415.h.
  */
 uint32_t SystemCoreClock = AT32_HCLK;
+#define DUMMY_NOP()  {__NOP();__NOP();__NOP();__NOP();__NOP(); __NOP(); \
+  __NOP();__NOP();__NOP();__NOP();__NOP(); __NOP(); \
+  __NOP();__NOP();__NOP();__NOP();__NOP(); __NOP(); \
+  __NOP();__NOP();__NOP();__NOP();__NOP(); __NOP(); \
+  __NOP();__NOP();__NOP();__NOP();__NOP(); __NOP(); \
+  __NOP();__NOP();__NOP();__NOP();__NOP(); __NOP();}
 
 /*===========================================================================*/
 /* Driver local variables and types.                                         */
@@ -62,7 +68,9 @@ static void hal_lld_battery_powered_domain_init(void) {
   if ((CRM->BPDC & AT32_ERTCSEL_MASK) != AT32_ERTCSEL) {
     /* Battery powered domain reset.*/
     CRM->BPDC = CRM_BPDC_BPDRST;
+    DUMMY_NOP();
     CRM->BPDC = 0;
+    DUMMY_NOP();
   }
 
 #if AT32_LEXT_ENABLED
@@ -82,9 +90,11 @@ static void hal_lld_battery_powered_domain_init(void) {
      with initialization.*/
   if ((CRM->BPDC & CRM_BPDC_ERTCEN) == 0) {
     /* Selects clock source.*/
+    DUMMY_NOP();
     CRM->BPDC |= AT32_ERTCSEL;
 
     /* ERTC clock enabled.*/
+    DUMMY_NOP();
     CRM->BPDC |= CRM_BPDC_ERTCEN;
   }
 #endif /* HAL_USE_RTC */
