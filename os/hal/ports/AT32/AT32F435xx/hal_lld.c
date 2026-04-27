@@ -38,6 +38,12 @@
  * @note    It is declared in system_at32f405xx.h.
  */
 uint32_t SystemCoreClock = AT32_HCLK;
+#define DUMMY_NOP()  {__NOP();__NOP();__NOP();__NOP();__NOP(); __NOP(); \
+  __NOP();__NOP();__NOP();__NOP();__NOP(); __NOP(); \
+  __NOP();__NOP();__NOP();__NOP();__NOP(); __NOP(); \
+  __NOP();__NOP();__NOP();__NOP();__NOP(); __NOP(); \
+  __NOP();__NOP();__NOP();__NOP();__NOP(); __NOP(); \
+  __NOP();__NOP();__NOP();__NOP();__NOP(); __NOP();}
 
 /*===========================================================================*/
 /* Driver local variables and types.                                         */
@@ -61,7 +67,9 @@ static void hal_lld_backup_domain_init(void) {
   if ((CRM->BPDC & AT32_ERTCSEL_MASK) != AT32_ERTCSEL) {
     /* Backup domain reset.*/
     CRM->BPDC = CRM_BPDC_BPDRST;
+    DUMMY_NOP();
     CRM->BPDC = 0;
+    DUMMY_NOP();
   }
 
   /* If enabled then the LEXT is started.*/
@@ -81,9 +89,11 @@ static void hal_lld_backup_domain_init(void) {
      initialization.*/
   if ((CRM->BPDC & CRM_BPDC_ERTCEN) == 0) {
     /* Selects clock source.*/
+    DUMMY_NOP();
     CRM->BPDC |= AT32_ERTCSEL;
 
     /* ERTC clock enabled.*/
+    DUMMY_NOP();
     CRM->BPDC |= CRM_BPDC_ERTCEN;
   }
 #endif /* AT32_ERTCSEL != AT32_ERTCSEL_NOCLOCK */
