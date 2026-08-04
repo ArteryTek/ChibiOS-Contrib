@@ -176,7 +176,7 @@
  * @{
  */
 #define AT32_LDOOVSEL_MASK          (7 << 0)   /**< LDOOVSEL bits mask.        */
-#define AT32_LDOOVSEL_1P0V          (5 << 0)   /**< LDOOVSEL 1.3V.             */
+#define AT32_LDOOVSEL_1P0V          (4 << 0)   /**< LDOOVSEL 1.1V. not use     */
 #define AT32_LDOOVSEL_1P1V          (4 << 0)   /**< LDOOVSEL 1.1V.             */
 #define AT32_LDOOVSEL_1P2V          (0 << 0)   /**< LDOOVSEL 1.2V.             */
 #define AT32_LDOOVSEL_1P3V          (1 << 0)   /**< LDOOVSEL 1.3V.             */
